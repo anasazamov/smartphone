@@ -102,4 +102,14 @@ def phone(request: HttpRequest, id=None) -> JsonResponse:
 
         return JsonResponse(to_dict(phone))
 
+    elif request.method == "DELETE":
+        try:
+            phone = Phone.objects.get(id=id)
+        except ObjectDoesNotExist:
+            return JsonResponse({'status': 'object does not exist!'})
+
+        phone.delete()
+
+        return JsonResponse({'status': 'ok'})
+
     return JsonResponse({'status': 'method not allowed!'})
