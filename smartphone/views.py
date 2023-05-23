@@ -81,14 +81,22 @@ def phone(request: HttpRequest, id=None) -> JsonResponse:
         data_json = request.body.decode()
         data = json.loads(data_json)
         
-        phone.name        = data.get('name', phone.name),
-        phone.description = data.get('description', phone.description),
-        phone.url         = data.get('url', phone.url),
-        phone.color       = data.get('color', phone.color),
-        phone.ram         = data.get('ram', phone.ram),
-        phone.memory      = data.get('memory', phone.memory),
-        phone.brend       = data.get('brend', phone.brend),
-        phone.price       = data.get('price', phone.price),
+        if data.get('name'):
+            phone.name = data['name']
+        if data.get('url'):
+            phone.url = data['url']
+        if data.get('color'):
+            phone.color = data['color']
+        if data.get('ram'):
+            phone.ram = data['ram']
+        if data.get('memory'):
+            phone.memory = data['memory']
+        if data.get('brend'):
+            phone.brend = data['brend']
+        if data.get('price'):
+            phone.price = data['price']
+        if data.get('description'):
+            phone.description = data['description']
 
         phone.save()
 
