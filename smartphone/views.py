@@ -27,3 +27,11 @@ def get_phone(request: HttpRequest, id: int) -> JsonResponse:
 
     except ObjectDoesNotExist:
         return JsonResponse({'status': 'object does not exist!'})
+
+
+def get_all_phone(request: HttpRequest) -> JsonResponse:
+    '''get phone by id'''
+    phones = Phone.objects.all()
+
+    result = [to_dict(phone=phone) for phone in phones]
+    return JsonResponse(result, safe=False)
