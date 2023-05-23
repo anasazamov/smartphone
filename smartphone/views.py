@@ -72,4 +72,26 @@ def phone(request: HttpRequest, id=None) -> JsonResponse:
 
         return JsonResponse(to_dict(phone))
 
+    elif request.method == "PUT":
+        try:
+            phone = Phone.objects.get(id=id)
+        except ObjectDoesNotExist:
+            return JsonResponse({'status': 'object does not exist!'})
+        # get data from request body
+        data_json = request.body.decode()
+        data = json.loads(data_json)
+        
+        phone.name        = data.get('name', phone.name),
+        phone.description = data.get('description', phone.description),
+        phone.url         = data.get('url', phone.url),
+        phone.color       = data.get('color', phone.color),
+        phone.ram         = data.get('ram', phone.ram),
+        phone.memory      = data.get('memory', phone.memory),
+        phone.brend       = data.get('brend', phone.brend),
+        phone.price       = data.get('price', phone.price),
+
+        phone.save()
+
+        return JsonResponse(to_dict(phone))
+
     return JsonResponse({'status': 'method not allowed!'})
