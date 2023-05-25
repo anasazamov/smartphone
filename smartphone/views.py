@@ -121,6 +121,7 @@ def get_by_ram(request: HttpRequest) -> JsonResponse:
 
     ram = int(params.get('ram', 0))
     if ram:
-        phones = Phone.objects.filter(ram=ram)
+        phones = Phone.objects.filter(ram=ram).order_by("price").reverse()
+
         result = [to_dict(phone) for phone in phones]
         return JsonResponse(result, safe=False)
