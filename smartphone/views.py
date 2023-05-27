@@ -125,3 +125,19 @@ def get_by_ram(request: HttpRequest) -> JsonResponse:
 
         result = [to_dict(phone) for phone in phones]
         return JsonResponse(result, safe=False)
+
+
+def get_by_price_in_range(request: HttpRequest) -> JsonResponse:
+    if request.method == "GET":
+        params = request.GET
+
+        min = float(params.get('min'))
+        max = float(params.get('max'))
+        
+        result = []
+
+        for smartphone in Phone.objects.all():
+            if min <= smartphone.price and smartphone.price <= max:
+                result.append(to_dict(smartphone))
+
+        return JsonResponse(result, safe=False)
